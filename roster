@@ -1,0 +1,6 @@
+# Roster file for salt-ssh
+[hostid]:
+  host: [hostname]
+  port: 22
+  user: root
+  identity: /path/to/key  

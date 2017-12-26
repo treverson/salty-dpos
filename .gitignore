@@ -1,0 +1,3 @@
+*.pyc
+pillar/private/hashes.sls
+pillar/pillar_override/*.sls

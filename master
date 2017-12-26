@@ -1,0 +1,16 @@
+
+root_dir: var
+
+pki_dir: ./pki
+
+cachedir: ./cache
+
+log_file: ./master.log
+
+file_roots:
+  base:
+    - ./salt
+
+pillar_roots:
+  base:
+    - ./pillar
