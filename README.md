@@ -395,9 +395,19 @@ Get the help messages from the platform shell tool
 salt 'dpos-delegate1' cryptoadmin.help
 ```
 
-Rebuild the dpos database
+Rebuild the dpos database from official source
 ```
 salt 'dpos-delegate1' cryptoadmin.rebuild
+```
+
+Rebuild the dpos database from url
+```
+salt 'dpos-delegate1' cryptoadmin.rebuild url="https://snapshot.lisknode.io"
+```
+
+Rebuild the dpos database from local copy
+```
+salt 'dpos-delegate1' cryptoadmin.rebuild local="/path/to/blockchain.db.gz"
 ```
 
 Reload the dpos crypto platform process
@@ -405,14 +415,24 @@ Reload the dpos crypto platform process
 salt 'dpos-delegate1' cryptoadmin.reload
 ```
 
+Get the status of the process
+```
+salt 'dpos-delegate1' cryptoadmin.status
+```
+
 Start the dpos crypto platform process
 ```
 salt 'dpos-delegate1' cryptoadmin.start
 ```
 
-Get the status of the process
+Start the dpos crypto application process (if applicable)
 ```
-salt 'dpos-delegate1' cryptoadmin.status
+salt 'dpos-delegate1' cryptoadmin.start_node
+```
+
+Start the dpos crypto database process (if applicable)
+```
+salt 'dpos-delegate1' cryptoadmin.start_db
 ```
 
 Stop the dpos platform process
@@ -420,6 +440,15 @@ Stop the dpos platform process
 salt 'dpos-delegate1' cryptoadmin.stop
 ```
 
+Stop the dpos platform application process (if applicable)
+```
+salt 'dpos-delegate1' cryptoadmin.stop_node
+```
+
+Stop the dpos platform database process (if applicable)
+```
+salt 'dpos-delegate1' cryptoadmin.stop_db
+```
 
 ### Cryptoadmin Detailed Guide
 
