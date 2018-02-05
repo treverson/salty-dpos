@@ -24,18 +24,22 @@ app_port: 9405
 working_dir: /opt/oxy
 app_dir: /opt/oxy/oxy-main/
 app_port: 10000
+snapshot_url: https://downloads.oxycoin.io/snapshots/master
 {% elif grains.get('oxyenv') == 'test' %}
 working_dir: /opt/oxy
 app_dir: /opt/oxy/oxy-test/
 app_port: 9998
+snapshot_url: https://downloads.oxycoin.io/snapshots/testnet
 {% elif grains.get('lwfenv') == 'main' %}
 working_dir: /opt/lwf
 app_dir: /opt/lwf/lwf-main/
 app_port: 5556
+snapshot_url: https://downloads.lwf.io/snapshots/master
 {% elif grains.get('lwfenv') == 'test' %}
 working_dir: /opt/lwf
 app_dir: /opt/lwf/lwf-test/
 app_port: 5555
+snapshot_url: https://downloads.lwf.io/snapshots/testnet
 {% elif grains.get('cryptoenv') == 'test' %}
 working_dir: /opt/lwf
 app_dir: /opt/lwf/lwf-test/
