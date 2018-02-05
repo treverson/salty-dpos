@@ -390,6 +390,26 @@ salt 'dpos-delegate1' salty_dpos_post.disable_forging
 
 ### Cryptoadmin Quick Reference Guide
 
+Find string in the logs of the application process
+```
+salt 'crypto-delegate1' cryptoadmin.app_log_find forged
+```
+
+Tail the logs of the application process
+```
+salt 'crypto-delegate1' cryptoadmin.app_logs
+```
+
+Find string in the logs of the database
+```
+salt 'crypto-delegate1' cryptoadmin.db_log_find err
+```
+
+Tail the logs of the application process
+```
+salt 'crypto-delegate1' cryptoadmin.db_logs
+```
+
 Get the help messages from the platform shell tool
 ```
 salt 'dpos-delegate1' cryptoadmin.help
