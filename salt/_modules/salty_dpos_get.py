@@ -12,10 +12,6 @@ def _get_url():
         url = 'http://localhost:8000'
     elif __grains__.get('liskenv') == 'test':
         url = 'http://localhost:7000'
-    elif __grains__.get('arkenv') == 'main':
-        url = 'http://localhost:4001'
-    elif __grains__.get('arkenv') == 'test':
-        url = 'http://localhost:4000'
     elif __grains__.get('shiftenv') == 'main':
         url = 'http://localhost:9305'
     elif __grains__.get('shiftenv') == 'test':
@@ -24,8 +20,10 @@ def _get_url():
         url = 'http://localhost:10000'
     elif __grains__.get('oxyenv') == 'test':
         url = 'http://localhost:9998'
-    elif __grains__.get('riseenv') == 'main':
-        url = 'http://localhost:5555'
+    elif __grains__.get('lwfenv') == 'main':
+        url = 'http://localhost:18124'
+    elif __grains__.get('lwfenv') == 'test':
+        url = 'http://localhost:18101'
     else:
         return None
 
