@@ -1,3 +1,3 @@
 include:
-  default.users.admin
-  default.users.ssh
+  - default.users.admin
+  - default.users.ssh
