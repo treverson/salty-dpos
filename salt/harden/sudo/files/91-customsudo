@@ -1,0 +1,5 @@
+{{ pillar.get('admin_name') }} ALL=(root) /usr/sbin/tripwire
+{{ pillar.get('admin_name') }} ALL=(root) /usr/sbin/twadmin
+{{ pillar.get('admin_name') }} ALL=(root) /usr/bin/certbot
+{{ pillar.get('admin_name') }} ALL=(root) /sbin/reboot
+{{ pillar.get('admin_name') }} ALL=(root) /usr/local/bin/restart_salt_minion

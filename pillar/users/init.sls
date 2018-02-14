@@ -19,3 +19,8 @@ username: lwfadmin
 group: lwfadmin
 forger_name: slasheks
 {% endif %}
+
+{% if grains.get('cryptoenv') %}
+admin_name: cryptoadmin
+admin_group: cryptoadmin
+{% endif %}
