@@ -226,9 +226,34 @@ def enable_forging(dpos_coin, delegate, node=False, force_enable=False, blacklis
            runner_resp['message'] += "Disabled forging on {}".format(" ".join(result))
 
         else:
+            # TODO check height and consensus of the forging node
 
-            runner_resp['message'] = 'Already forging on one node'
-            return runner_resp
+            # Make sure the forging node is good
+            forging_node = runner_resp['forging'][0]
+            test = client.cmd(forging_node, 'salty_dpos_get.failover_candidate')
+
+            for k,v in test.items():
+
+                if v is True:
+
+                    runner_resp['message'] = 'Already forging on one node'
+
+                    return runner_resp
+
+                else:
+
+                    nodes = {}
+                    for node in response:
+                        nodes[node] = client.cmd(node, 'salty_dpos_get.failover_candidate')
+
+                    # Delete the forging node from the results
+                    del nodes[forging_node]
+
+                    # Pick one from what is left
+
+                    # Disable forging on the node that is active
+
+                    # Enable forging on the node that is good
 
     elif forging is True and force_enable is True:
 
@@ -242,8 +267,6 @@ def enable_forging(dpos_coin, delegate, node=False, force_enable=False, blacklis
 
         nodes = []
         for node in response:
-            test = client.cmd(node, 'salty_dpos_get.failover_candidate')
-            log.debug(test)
             nodes.append(client.cmd(node, 'salty_dpos_get.failover_candidate'))
 
         # Grab the first node if there are nodes
