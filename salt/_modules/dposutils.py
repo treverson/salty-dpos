@@ -51,10 +51,10 @@ class dposAPI(object):
             resp['success'] = False
             resp['message'] = str(error)
 
-        except:
+        except Exception as err:
 
             resp['success'] = False
-            resp['message'] = "Something Blew up"
+            resp['message'] = "{}".format(err)
 
 
         return resp
@@ -477,6 +477,10 @@ class dposAPI(object):
         # First grab public key from delegate name
         payload = {'parameters':'/get?username={}'.format(delegate)}
         delegate_info = self.delegates('delegate_list',payload)
+
+        if delegate_info.get('success') is False:
+
+            return {'enabled': False, 'err': delegate_info}
 
         pubkey = delegate_info['delegate']['publicKey']
 

@@ -8,22 +8,8 @@ def _get_url():
     """
 
     """
-    if __grains__.get('liskenv') == 'main':
-        url = 'http://localhost:8000'
-    elif __grains__.get('liskenv') == 'test':
-        url = 'http://localhost:7000'
-    elif __grains__.get('shiftenv') == 'main':
-        url = 'http://localhost:9305'
-    elif __grains__.get('shiftenv') == 'test':
-        url = 'http://localhost:9405'
-    elif __grains__.get('oxyenv') == 'main':
-        url = 'http://localhost:10000'
-    elif __grains__.get('oxyenv') == 'test':
-        url = 'http://localhost:9998'
-    elif __grains__.get('lwfenv') == 'main':
-        url = 'http://localhost:18124'
-    elif __grains__.get('lwfenv') == 'test':
-        url = 'http://localhost:18101'
+    if __pillar__.get('app_port'):
+        url = 'http://localhost:{}'.format(__pillar__.get('app_port'))
     else:
         return None
 

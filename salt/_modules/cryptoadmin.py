@@ -43,6 +43,8 @@ def status():
         cmd_run = 'bash oxy_manager.bash status'
     elif __grains__.get('lwfenv'):
         cmd_run = 'bash lwf_manager.bash status'
+    elif __grains__.get('onzenv'):
+        cmd_run = 'bash onz_manager.bash status'
     else:
         return 'Platform not supported'
 
@@ -66,6 +68,8 @@ def help():
         cmd_run = 'bash oxy_manager.bash'
     elif __grains__.get('lwfenv'):
         cmd_run = 'bash lwf_manager.bash'
+    elif __grains__.get('onzenv'):
+        cmd_run = 'bash onz_manager.bash'
     else:
         return 'Platform not supported'
 
@@ -198,6 +202,8 @@ def stop():
         cmd_run = 'bash oxy_manager.bash stop'
     elif __grains__.get('lwfenv'):
         cmd_run = 'bash lwf_manager.bash stop'
+    elif __grains__.get('onzenv'):
+        cmd_run = 'bash onz_manager.bash stop'
     else:
         return 'Platform not supported'
 
@@ -255,6 +261,8 @@ def start():
         cmd_run = 'bash oxy_manager.bash start'
     elif __grains__.get('lwfenv'):
         cmd_run = 'bash lwf_manager.bash start'
+    elif __grains__.get('onzenv'):
+        cmd_run = 'bash onz_manager.bash start'
     else:
         return 'Platform not supported'
 
@@ -312,6 +320,8 @@ def reload():
         cmd_run = 'bash oxy_manager.bash reload'
     elif __grains__.get('lwfenv'):
         cmd_run = 'bash lwf_manager.bash reload'
+    elif __grains__.get('onzenv'):
+        cmd_run = 'bash onz_manager.bash reload'
     else:
         return 'Platform not supported'
 
@@ -391,3 +401,22 @@ def update_wallet():
     response = _run_crypto_cmd(cmd_run)
 
     return response
+
+def clean_start():
+    """
+    clean_start (drop database)
+
+    CLI Example::
+
+        salt '*' cryptoadmin.clean_start
+    """
+
+    if __grains__.get('onzenv'):
+        cmd_run = 'bash onz_manager.bash clean_start'
+    else:
+        return 'Platform not supported'
+
+    response = _run_crypto_cmd(cmd_run)
+
+    return response
+
