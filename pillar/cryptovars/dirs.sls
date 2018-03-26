@@ -33,13 +33,21 @@ snapshot_url: https://downloads.oxycoin.io/snapshots/testnet
 {% elif grains.get('lwfenv') == 'main' %}
 working_dir: /opt/lwf
 app_dir: /opt/lwf/lwf-main/
-app_port: 5556
+app_port: 18124
 snapshot_url: https://downloads.lwf.io/snapshots/master
 {% elif grains.get('lwfenv') == 'test' %}
 working_dir: /opt/lwf
 app_dir: /opt/lwf/lwf-test/
-app_port: 5555
+app_port: 18101
 snapshot_url: https://downloads.lwf.io/snapshots/testnet
+{% elif grains.get('onzenv') == 'main' %}
+working_dir: /opt/onz
+app_dir: /opt/onz/onz-main/
+app_port: 11000
+{% elif grains.get('onzenv') == 'test' %}
+working_dir: /opt/onz
+app_dir: /opt/onz/onz-test/
+app_port: 10998
 {% elif grains.get('cryptoenv') == 'test' %}
 working_dir: /opt/lwf
 app_dir: /opt/lwf/lwf-test/
