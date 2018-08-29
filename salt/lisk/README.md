@@ -18,3 +18,8 @@ sudo salt dpos-delegate1 state.sls lisk.start
 <b>Remove the lisk application from the dpos-delegate1 minion</b>
 sudo salt dpos-delegate1 state.sls lisk.remove
 </pre> 
+---
+<pre>
+<b>Upgrade 1 Command</b>
+sudo salt 'dpos-delegate1' state.apply lisk.upgrade
+</pre>
