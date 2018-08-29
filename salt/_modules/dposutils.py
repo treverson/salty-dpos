@@ -5,12 +5,106 @@ import json
 import requests
 import os.path
 
+class dposAPIv1(object):
+
+    def __init__(self, url, version):
+
+        self.headers = {'content-type': 'application/json'}
+        self.target_url = url
+        self.version = version
+
+    def requests_check(self, url, req_type, payload=None):
+        """
+        """
+
+        resp = {'success': True}
+
+        try:
+            if req_type == 'GET':
+                r = requests.get(url)
+            elif req_type == 'PUT':
+                if not payload:
+                    resp['success'] = False
+                else:
+                    r = requests.put(url, json=payload,
+                                     headers=self.headers)
+            elif req_type == 'POST':
+                if not payload:
+                    resp['success'] = False
+                else:
+                    r = requests.post(url, json=payload,
+                                      headers=self.headers)
+                if r.status_code != 200:
+
+                    raise ValueError('A very specific bad thing happened')
+
+            resp = r.json()
+
+        except ValueError as error:
+            resp['success'] = False
+            resp['message'] = str(error)
+
+        except Exception as err:
+
+            resp['success'] = False
+            resp['message'] = "{}".format(err)
+
+        return resp
+
+    def loader(self, rtype):
+        """
+        """
+
+        targets = {
+                'status' : '/api/node/status',
+                'sync' : '/api/node/status',
+                'constants' : '/api/node/constants'
+            }
+
+        url = self.target_url + targets[rtype]
+
+        return  self.requests_check(url, 'GET').get('data')
+
+    def delegate(self, delegate):
+        """
+        """
+
+        url = self.target_url + '/api/delegates?username={}'.format(delegate)
+
+        return self.requests_check(url, 'GET').get('data')[0]
+
+    def forge_check(self, delegate):
+        """
+        check forging status
+        """
+        data = self.delegate(delegate)
+
+        pubkey = data['account']['publicKey']
+
+        url = self.target_url + '/api/node/status/forging?publicKey={}'.format(pubkey)
+
+        resp = self.requests_check(url, 'GET')
+
+        if not resp:
+            return False
+        else:
+            return resp['data'][0]['forging']
+
+    def peers(self):
+        """
+        """
+
+        url = self.target_url + '/api/peers'
+
+        return self.requests_check(url, 'GET').get('data')
+
 class dposAPI(object):
 
-    def __init__(self,rturl=''):
+    def __init__(self, rturl, version):
 
         self.headers = {'content-type': 'application/json'}
         self.target_url = rturl
+        self.version = version
 
     def requests_check(self, url, req_type, payload=None):
         """

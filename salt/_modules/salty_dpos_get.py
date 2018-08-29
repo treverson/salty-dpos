@@ -19,14 +19,31 @@ def _get_api():
     """
 
     """
-
     url = _get_url()
 
     if not url:
         return None
 
-    return dposutils.dposAPI(url)
+    if __grains__.get('crypto_ver') == 1:
+        return dposutils.dposAPIv1(url, 1)
+    else:
+        return dposutils.dposAPI(url, 0)
 
+def constants():
+    """
+    GET constants information from the target API
+
+    V1 Only
+
+    CLI Example::
+
+        salt '*' salty_dpos_get.constants
+    """
+    api = _get_api()
+    if api.version == 1:
+        return _get_api().loader('constants')
+    else:
+        return None
 
 def sync():
     """
@@ -48,7 +65,11 @@ def height():
         salt '*' salty_dpos_get.height
     """
 
-    return _get_api().loader('sync').get('height')
+    api = _get_api()
+    if api.version == 1:
+        return api.loader('status').get('height')
+    else:
+        return api.loader('sync').get('height')
 
 def status():
     """
@@ -69,10 +90,6 @@ def consensus():
 
         salt '*' salty_dpos_get.consensus
     """
-
-    if __grains__.get('arkenv'):
-        return 'Consensus not supported on this platform'
-
     return _get_api().loader('sync').get('consensus')
 
 def version():
@@ -90,7 +107,11 @@ def version():
         "parameters" : ""
     }
 
-    return _get_api().peers('peer_version', payload)
+    api = _get_api()
+    if api.version == 1:
+        return _get_api().loader('constants').get('version')
+    else:
+        return _get_api().peers('peer_version', payload)
 
 def peer_list():
     """
@@ -107,7 +128,11 @@ def peer_list():
         "parameters" : ""
         }
 
-    return _get_api().peers('peer_list', payload)
+    api = _get_api()
+    if api.version == 1:
+        return api.peers()
+    else:
+        return api.peers('peer_list', payload)
 
 def delegate(delegate):
     """
@@ -141,7 +166,11 @@ def delegate(delegate):
         vote:
             2417487588036848
     """
-    return _get_api().autoname(delegate).get('delegate')
+    api = _get_api()
+    if api.version == 1:
+        return api.delegate(delegate)
+    else:
+        return api.autoname(delegate).get('delegate')
 
 def forging_status(username):
     """
@@ -159,8 +188,11 @@ def forging_status(username):
             True
 
     """
-
-    return _get_api().forge_check(username).get('enabled')
+    api = _get_api()
+    if api.version == 1:
+        return api.forge_check(username)
+    else:
+        return api.forge_check(username).get('enabled')
 
 def forged_blocks(username, limit=5, order_by='height'):
     """
@@ -279,10 +311,6 @@ def network_height():
         delegate:
             1913313
     """
-
-    if __grains__.get('arkenv'):
-        return 'Currently not supported on this platform'
-
     allpeers = []
 
     peerl = peer_list()
